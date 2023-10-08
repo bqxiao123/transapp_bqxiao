@@ -37,7 +37,7 @@ if st.session_state["authentication_status"]:
     abs_pth = os.path.abspath('users/'+username)
 
     if "new_word.txt" in os.listdir('users/'+username):
-        with open(f"{abs_pth}\\new_word.txt", "r") as f:
+        with open(f"{abs_pth}/new_word.txt", "r") as f:
             word = f.readlines()
     else:
         word=[]
