@@ -63,8 +63,9 @@ if st.session_state["authentication_status"]:
             else:
                 f.writelines("\n" + new_wd)
 
-    text_contents = '''This is some text'''
-    st.download_button('Download some text', text_contents)
+    with open(f"{abs_pth}\\new_word.txt", 'r') as file:
+        file_contents = file.read()
+    st.download_button('Download some text', file_contents)
 
     st.sidebar.markdown("## Select Data Time and Detector")
 
