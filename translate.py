@@ -28,6 +28,7 @@ authenticator = stauth.Authenticate(
 name, authentication_status, username = authenticator.login('Login', 'main')
 # st.write(name,authentication_status, username)
 if st.session_state["authentication_status"]:
+    st.write(st.session_state.logout)
     authenticator.logout('Logout', 'main', key='unique_key')
     # st.write(f'Welcome *{st.session_state["username"]}*')
     # st.title('Some content')
@@ -37,7 +38,7 @@ if st.session_state["authentication_status"]:
     abs_pth = os.path.abspath('users/'+username)
 
     if "new_word.txt" in os.listdir('users/'+username):
-        with open(f"{abs_pth}/new_word.txt", "r") as f:
+        with open(f"{abs_pth}\\new_word.txt", "r") as f:
             word = f.readlines()
     else:
         word=[]
@@ -94,6 +95,8 @@ elif st.session_state["authentication_status"] is False:
     st.error('Username/password is incorrect')
 elif st.session_state["authentication_status"] is None:
     st.warning('Please enter your username and password')
+
+st.write(st.session_state.logout)
 
 ##test
 
