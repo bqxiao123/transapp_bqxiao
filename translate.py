@@ -49,7 +49,7 @@ if st.session_state["authentication_status"]:
 
     translator = GoogleTranslator(source='auto', target='zh-CN')
     st.sidebar.markdown("## Translate with GOOGLE API")
-    text = st.sidebar.text_area("translats", "translate")
+    text = st.sidebar.text_area("translats", "")
     # # 将英文文本翻译成中文
     translated_text = translator.translate(text)
     # col1.write("Original Image :camera:")
