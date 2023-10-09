@@ -32,7 +32,7 @@ translated_text = translator.translate(text)
 # col1.write("Original Image :camera:")
 col1.markdown(text)
 col2.markdown(translated_text)
-new_wd = st.text_input("new word:", "").strip()
+new_wd = st.text_input("Input your new word here:", "").strip()
 
 if new_wd not in [x.strip() for x in word]:
     print(word, new_wd)
@@ -46,7 +46,7 @@ print('xxx', type(word), '........')
 
 with open(f"{abs_pth}/new_word.txt", "r") as f:
     word = f.read()
-st.download_button('Download some text', word)
+st.download_button('Download your new words', word)
 
 
 ##test
