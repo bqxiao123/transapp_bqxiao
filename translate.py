@@ -42,7 +42,7 @@ if new_wd not in [x.strip() for x in word]:
         f.write(word)
 
 #
-print('xxx', type(word), '........')
+# print('xxx', type(word), '........')
 
 with open(f"{abs_pth}/new_word.txt", "r") as f:
     word = f.read()
