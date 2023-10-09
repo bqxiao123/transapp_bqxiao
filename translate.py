@@ -4,7 +4,7 @@ import pytesseract
 from googletrans import Translator
 from google_trans_new import google_translator
 from deep_translator import GoogleTranslator
-import streamlit_authenticator as stauth
+# import streamlit_authenticator as stauth
 import os
 
 wd_file = "bqxiao"
