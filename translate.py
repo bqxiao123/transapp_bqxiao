@@ -15,7 +15,7 @@ if wd_file not in os.listdir('users'):
 abs_pth = os.path.abspath('users/'+wd_file)
 
 if "new_word.txt" in os.listdir('users/'+wd_file):
-    with open(f"{abs_pth}\\new_word.txt", "r") as f:
+    with open(f"{abs_pth}/new_word.txt", "r") as f:
         word = f.readlines()
 else:
     word = []
