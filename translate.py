@@ -38,13 +38,13 @@ if new_wd not in [x.strip() for x in word]:
     print(word, new_wd)
     word = word + [new_wd.strip()]
     word = '\n'.join(word)
-    with open(f"{abs_pth}\\new_word.txt", "w") as f:
+    with open(f"{abs_pth}/new_word.txt", "w") as f:
         f.write(word)
 
 #
 print('xxx', type(word), '........')
 
-with open(f"{abs_pth}\\new_word.txt", "r") as f:
+with open(f"{abs_pth}/new_word.txt", "r") as f:
     word = f.read()
 st.download_button('Download some text', word)
 
