@@ -7,96 +7,47 @@ from deep_translator import GoogleTranslator
 import streamlit_authenticator as stauth
 import os
 
+wd_file = "bqxiao"
 
 
-# hashed_passwords = stauth.Hasher(['abc', 'def']).generate()
+if wd_file not in os.listdir('users'):
+    os.mkdir('users/'+wd_file)
+abs_pth = os.path.abspath('users/'+wd_file)
 
-import yaml
-from yaml.loader import SafeLoader
+if "new_word.txt" in os.listdir('users/'+wd_file):
+    with open(f"{abs_pth}\\new_word.txt", "r") as f:
+        word = f.readlines()
+else:
+    word = []
 
-with open('config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
+word = [x.replace('\n', '') for x in word if x != '\n']
 
-authenticator = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
-)
+col1, col2 = st.columns(2)
 
-name, authentication_status, username = authenticator.login('Login', 'main')
-# st.write(name,authentication_status, username)
-if st.session_state["authentication_status"]:
-    st.write(st.session_state.logout)
-    authenticator.logout('Logout', 'main', key='unique_key')
-    # st.write(f'Welcome *{st.session_state["username"]}*')
-    # st.title('Some content')
-    if username not in os.listdir('users'):
-        os.mkdir('users/'+username)
+translator = GoogleTranslator(source='auto', target='zh-CN')
+st.sidebar.markdown("## Translate with GOOGLE API")
+text = st.sidebar.text_area("translats", "")
+# # 将英文文本翻译成中文
+translated_text = translator.translate(text)
+# col1.write("Original Image :camera:")
+col1.markdown(text)
+col2.markdown(translated_text)
+new_wd = st.text_input("new word:", "").strip()
 
-    abs_pth = os.path.abspath('users/'+username)
+if new_wd not in [x.strip() for x in word]:
+    print(word, new_wd)
+    word = word + [new_wd.strip()]
+    word = '\n'.join(word)
+    with open(f"{abs_pth}\\new_word.txt", "w") as f:
+        f.write(word)
 
-    if "new_word.txt" in os.listdir('users/'+username):
-        with open(f"{abs_pth}\\new_word.txt", "r") as f:
-            word = f.readlines()
-    else:
-        word=[]
+#
+print('xxx', type(word), '........')
 
+with open(f"{abs_pth}\\new_word.txt", "r") as f:
+    word = f.read()
+st.download_button('Download some text', word)
 
-    # st.markdown(word)
-
-    col1, col2 = st.columns(2)
-
-    translator = GoogleTranslator(source='auto', target='zh-CN')
-    st.sidebar.markdown("## Translate with GOOGLE API")
-    text = st.sidebar.text_area("translats", "")
-    # # 将英文文本翻译成中文
-    translated_text = translator.translate(text)
-    # col1.write("Original Image :camera:")
-    col1.markdown(text)
-    col2.markdown(translated_text)
-    new_wd = st.text_input("new word:", "")
-    if new_wd not in [x.strip() for x in word]:
-        with open(f"{abs_pth}\\new_word.txt", "a") as f:
-            if len(word) < 1:
-                f.writelines(new_wd)
-            else:
-                f.writelines("\n" + new_wd)
-
-    with open(f"{abs_pth}\\new_word.txt", 'r') as file:
-        file_contents = file.read()
-    st.download_button('Download some text', file_contents)
-
-    st.sidebar.markdown("## Select Data Time and Detector")
-
-    upload_img = st.sidebar.file_uploader("Upload Image")
-
-    if upload_img:
-        img = Image.open(upload_img)
-        grey_img = img.convert("L")
-        st.image(grey_img)
-        text = pytesseract.image_to_string(img)
-        # st.markdown(text)
-        # 创建翻译器对象
-        translator = Translator()
-
-        #
-        # # 将英文文本翻译成中文
-        translated_text = translator.translate(text, src='en', dest='zh-CN')
-        # print(text)
-        # st.markdown(translated_text.text)
-
-    # 打印翻译结果
-    # print("英文单词:", english_text)
-    # print("中文翻译:", translated_text.text)
-
-elif st.session_state["authentication_status"] is False:
-    st.error('Username/password is incorrect')
-elif st.session_state["authentication_status"] is None:
-    st.warning('Please enter your username and password')
-
-st.write(st.session_state.logout)
 
 ##test
 
